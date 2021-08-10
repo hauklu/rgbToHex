@@ -2,82 +2,82 @@
   <div class="box">
     <p class="title">rgb颜色: </p>
     <div class="rgb">
-      <input
-        v-model="rgb.r"
-        ref="rgbR"
-        class="rgb-inp"
-        type="text"
-        maxlength="3"
-        @input="rgbRKeyIn"
-      >
-      <input
-        v-model="rgb.g"
-        ref="rgbG"
-        class="rgb-inp"
-        type="text"
-        maxlength="3"
-        @input="rgbGKeyIn"
-      >
-      <input
-        v-model="rgb.b"
-        ref="rgbB"
-        class="rgb-inp"
-        type="text"
-        maxlength="3"
-        @input="rgbBKeyIn($event)"
-      >
+      <div class="inp">
+        <input
+          v-model="rgb.r"
+          ref="rgbR"
+          type="text"
+          maxlength="3"
+          @input="rgbRKeyIn"
+        >
+        <input
+          v-model="rgb.g"
+          ref="rgbG"
+          type="text"
+          maxlength="3"
+          @input="rgbGKeyIn"
+        >
+        <input
+          v-model="rgb.b"
+          ref="rgbB"
+          type="text"
+          maxlength="3"
+          @input="rgbBKeyIn($event)"
+        >
+        <span
+          class="icon-close"
+          @click="clearRgbInp"
+        >+</span>
+      </div>
+      <button @click="rgbChangeToHex">转换</button>
       <div
         :style="`background-color: #${rgbResult.val};`"
         class="rgb-color"
       />
-      <button @click="rgbChangeToHex">转换</button>
     </div>
-    <div
-      v-show="rgbResult.visi"
-      class="result-box"
-    >
-      <input
-        type="text"
-        :value="rgbResult.val"
-      >
-      <input
-        type="button"
-        value="复制"
-        @click="copy(rgbResult.val)"
-      >
+    <div class="result">
+      <div v-show="rgbResult.visi">
+        <input
+          type="text"
+          :value="rgbResult.val"
+        >
+        <button @click="copy(rgbResult.val)">复制</button>
+      </div>
     </div>
     <p class="title">16进制颜色: </p>
     <div class="hex">
-      <input
-        value="#"
-        class="hex-inp-before"
-      >
-      <input
-        v-model="hex"
-        class="hex-inp"
-        type="text"
-        maxlength="6"
-        @input="hexKeyIn"
-      >
+      <div class="hex-inp">
+        <input
+          value="#"
+          class="before"
+        >
+        <input
+          v-model="hex"
+          class="inp"
+          type="text"
+          maxlength="6"
+          @input="hexKeyIn"
+        >
+        <span
+          class="icon-close"
+          @click="clearHexInp"
+        >+</span>
+      </div>
+
+      <button @click="hexChangeToRgb">转换</button>
       <div
         :style="`background-color: #${hex};`"
         class="hex-color"
       />
-      <button @click="hexChangeToRgb">转换</button>
     </div>
-    <div
-      v-show="hexResult.visi"
-      class="result-box"
-    >
-      <input
-        type="text"
-        :value="hexResult.val"
-      >
-      <input
-        type="button"
-        value="复制"
-        @click="copy(hexResult.val)"
-      >
+    <div class="result">
+      <div v-show="hexResult.visi">
+        <input
+          type="text"
+          :value="hexResult.val"
+        >
+        <button @click="copy(hexResult.val)">复制</button>
+      </div>
     </div>
     <div class="common">
       <header>常用颜色表</header>
@@ -140,6 +140,19 @@ export default {
     this.initFocus()
   },
   methods: {
+    // 清空hex输入框
+    clearHexInp() {
+      this.hex = ''
+    },
+    // 清空rgb输入框
+    clearRgbInp() {
+      this.rgb = {
+        r: undefined,
+        g: undefined,
+        b: undefined
+      }
+    },
+    // 初始化常用颜色表
     initCommonColor() {
       this.commonColorData = commonColor
     },
@@ -203,14 +216,31 @@ export default {
   }
 
   .rgb {
-    .rgb-inp {
-      width: 1rem;
-      height: 0.6rem;
+    .inp {
+      display: inline-block;
+      padding: 0.1rem;
+      border-radius: 5px;
+      background: #ccc;
+      input {
+        width: 1rem;
+        height: 0.6rem;
+      }
+
+      .icon-close {
+        display: inline-block;
+        vertical-align: middle;
+        transform: rotate(45deg);
+        font-size: 0.6rem;
+        color: #000;
+        &:hover {
+          cursor: pointer;
+        }
+      }
     }
 
     .rgb-color {
       display: inline-block;
-      vertical-align: top;
+      vertical-align: middle;
       width: 1rem;
       height: 0.6rem;
       margin-left: 0.2rem;
@@ -218,32 +248,48 @@ export default {
     }
 
     button {
+      width: 1rem;
+      height: 0.6rem;
       margin-left: 0.2rem;
+      &:hover {
+        cursor: pointer;
+      }
     }
-  }
-
-  .result-box {
-    margin-top: 0.5rem;
   }
 
   .hex {
     font-size: 0;
-
-    .hex-inp-before,
     .hex-inp {
-      height: 0.6rem;
-      font-size: 0.4rem;
-      margin: 0;
-    }
+      position: relative;
+      display: inline-block;
+      .before,
+      .inp {
+        height: 0.6rem;
+        font-size: 0.4rem;
+        margin: 0;
+      }
 
-    .hex-inp-before {
-      width: 0.3rem;
-      text-align: center;
-    }
+      .before {
+        width: 0.3rem;
+        text-align: center;
+      }
 
-    .hex-inp {
-      width: 3rem;
-      letter-spacing: 0.5em;
+      .inp {
+        width: 3rem;
+        letter-spacing: 0.5em;
+      }
+
+      .icon-close {
+        position: absolute;
+        right: 0;
+        display: inline-block;
+        transform: rotate(45deg);
+        font-size: 0.6rem;
+        color: #000;
+        &:hover {
+          cursor: pointer;
+        }
+      }
     }
 
     .hex-color {
@@ -256,7 +302,33 @@ export default {
     }
 
     button {
+      width: 1rem;
+      height: 0.6rem;
       margin-left: 0.2rem;
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+
+  .result {
+    width: 5rem;
+    height: 0.5rem;
+    margin: 0 auto;
+    margin-top: 0.5rem;
+
+    input {
+      width: 3rem;
+      height: 0.5rem;
+    }
+
+    button {
+      display: inline-block;
+      width: 1rem;
+      height: 0.5rem;
+      &:hover {
+        cursor: pointer;
+      }
     }
   }
 
