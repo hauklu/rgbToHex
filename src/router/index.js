@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-
+import rgbToHex from './rgbToHex' // 路由模块-rgbToHex
 Vue.use(VueRouter)
 
 // 重复点击同一路由问题
@@ -17,5 +17,7 @@ export default new VueRouter({
       name: 'home',
       component: () => import('@/view/pages/Home')
     }
-  ]
+  ].concat(rgbToHex)
 })
+
+// console.log(routesHome)
