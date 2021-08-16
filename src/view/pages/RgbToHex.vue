@@ -195,9 +195,9 @@ export default {
     },
     // 点击rgb转换触发
     rgbChangeToHex() {
-      const str = [this.rgb.r, this.rgb.g, this.rgb.b]
+      const arr = [this.rgb.r, this.rgb.g, this.rgb.b]
       this.rgbResult.visi = true
-      this.rgbResult.val = rgbToHex(str)
+      this.rgbResult.val = rgbToHex(arr)
     },
     ctoast,
     rgbToHex,

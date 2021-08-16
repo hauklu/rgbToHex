@@ -9,6 +9,7 @@
 </template>
 
 <script>
+// console.log(@)
 export default {
   components: {
   },
@@ -30,9 +31,11 @@ export default {
 </script>
 
 <style lang="less" scoped>
+@import "~styles/test.less";
 .home {
   h1 {
     line-height: 1rem;
+    color: @testColor;
   }
 
   .rgb-to-hex {
