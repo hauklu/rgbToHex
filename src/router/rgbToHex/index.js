@@ -2,6 +2,6 @@ export default [
   {
     path: '/rgbToHex',
     name: 'rgbToHex',
-    component: () => import('@/view/pages/RgbToHex')
+    component: () => import('@/view/pages/rgbToHex/RgbToHex')
   }
 ]

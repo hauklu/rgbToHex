@@ -105,7 +105,7 @@
 </template>
 
 <script>
-import commonColor from '../assets/js/commonColor'
+import commonColor from '@/view/assets/js/commonColor'
 import { copy, ctoast, rgbToHex, hexToRgb } from '@/utils/tool.js'
 
 export default {
